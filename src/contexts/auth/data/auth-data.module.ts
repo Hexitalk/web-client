@@ -31,7 +31,7 @@ const authRegisterUseCaseFactory = (
   authRepo: AuthRepository,
   userRepo: UserRepository,
   profileRepo: ProfileRepository
-) => new AuthLoginUseCase(authRepo, userRepo, profileRepo);
+) => new AuthRegisterUseCase(authRepo, userRepo, profileRepo);
 export const authRegisterUseCaseProvider = {
   provide: AuthRegisterUseCase,
   useFactory: authRegisterUseCaseFactory,
