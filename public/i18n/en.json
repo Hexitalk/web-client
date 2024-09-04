@@ -1,0 +1,14 @@
+{
+  "user": {},
+  "profile": {},
+  "auth": {},
+  "friend": {},
+  "app": {
+    "landing-page": {
+      "subtitle-meet-new-people": "Meet new people, make new friends",
+      "create-account": "Create account",
+      "already-account": "Already have an accout?",
+      "sign-in": "Sign in"
+    }
+  }
+}

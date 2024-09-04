@@ -1,0 +1,16 @@
+<div class="left-side">
+  <img src="/images/logo_big.png" />
+</div>
+<div class="right-side">
+  <div>
+    <h1>Hexa Society</h1>
+    <h3>{{ "app.landing-page.subtitle-meet-new-people" | transloco }}</h3>
+    <button class="signup" [routerLink]="['/auth/sign-up']">
+      {{ "app.landing-page.create-account" | transloco }}
+    </button>
+    <p>{{ "app.landing-page.already-account" | transloco }}</p>
+    <button [routerLink]="['/auth/login']">
+      {{ "app.landing-page.sign-in" | transloco }}
+    </button>
+  </div>
+</div>

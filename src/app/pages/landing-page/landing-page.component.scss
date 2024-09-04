@@ -1,0 +1,84 @@
+//@use "../../../assets/styles/abstracts/vars" as vars;
+@use "abstracts/colors" as colors;
+@use "abstracts/vars" as vars;
+
+//@import "../../../assets/styles/sass/vars";
+
+:host {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+.left-side {
+  background-color: colors.$secondary;
+  -webkit-box-shadow: inset -92px 0px 22px -93px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: inset -92px 0px 22px -93px rgba(0, 0, 0, 0.75);
+  box-shadow: inset -92px 0px 22px -93px rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  width: 50%;
+  padding-right: 4rem;
+
+  img {
+    width: 100%;
+    max-width: 23rem;
+  }
+}
+
+.right-side {
+  background-color: colors.$quaternary;
+  width: 50%;
+  padding-left: 4rem;
+  display: flex;
+
+  align-items: center;
+  justify-content: start;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    top: -5rem;
+    h1 {
+      color: #eee;
+      font-size: 4rem;
+      text-transform: uppercase;
+    }
+    h3 {
+      color: #eee;
+      font-size: 1.45rem;
+      text-transform: uppercase;
+    }
+
+    p {
+      color: #eee;
+      font-size: 1.2rem;
+      margin-top: 4rem;
+    }
+
+    button {
+      width: auto;
+      min-width: 9rem;
+      background-color: colors.$primary;
+      border: 0;
+      /*border: 1px solid colors.$blue;*/
+      border-radius: 0.5rem;
+      padding: 0.4rem 0.8rem;
+      color: #000000;
+      font-weight: bold;
+      font-size: 1.1rem;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgb(255, 216, 74);
+      }
+
+      &.signup {
+        margin-top: 2rem;
+      }
+    }
+  }
+}

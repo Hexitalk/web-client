@@ -1,0 +1,33 @@
+# Node modules should not be copied as they will be installed in the Dockerfile
+node_modules
+npm-debug.log
+
+# Build artifacts should not be copied
+dist
+
+# Environment files that may contain sensitive information
+.env
+
+# Docker specific files and directories
+.dockerignore
+Dockerfile
+Dockerfile.dev
+docker-compose.yml
+
+# Mac specific files
+.DS_Store
+
+# VSCode settings (if using VSCode)
+.vscode
+
+# IDE specific files (if using other IDEs)
+.idea
+*.sublime-project
+*.sublime-workspace
+
+# Other
+coverage
+*.log
+*.tmp
+*.swp
+*.swo
