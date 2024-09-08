@@ -7,11 +7,24 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthDataModule } from '../../../data/auth-data.module';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-register-form-auth',
   standalone: true,
-  imports: [ReactiveFormsModule, AuthDataModule],
+  imports: [
+    ReactiveFormsModule,
+    AuthDataModule,
+    ButtonModule,
+    CardModule,
+    InputTextModule,
+    DropdownModule,
+    RouterModule,
+  ],
   templateUrl: './register-form-auth.component.html',
   styleUrl: './register-form-auth.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,4 +1,15 @@
-<p>
+<!--<p>
   <button (click)="setLang('es')">Español</button>
   <button (click)="setLang('en')">English</button>
 </p>
+-->
+<div>
+  <p-dropdown
+    [options]="languages"
+    optionLabel="name"
+    optionValue="code"
+    placeholder="Select language"
+    name="language-select"
+    (onChange)="selectChange($event)"
+  />
+</div>

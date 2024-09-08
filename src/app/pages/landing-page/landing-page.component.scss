@@ -10,8 +10,12 @@
   display: flex;
 }
 
+app-translate-select {
+  position: fixed;
+}
+
 .left-side {
-  background-color: colors.$secondary;
+  background-color: #142969;
   -webkit-box-shadow: inset -92px 0px 22px -93px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: inset -92px 0px 22px -93px rgba(0, 0, 0, 0.75);
   box-shadow: inset -92px 0px 22px -93px rgba(0, 0, 0, 0.75);
@@ -28,7 +32,7 @@
 }
 
 .right-side {
-  background-color: colors.$quaternary;
+  /*background-color: colors.$quaternary;*/
   width: 50%;
   padding-left: 4rem;
   display: flex;

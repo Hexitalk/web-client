@@ -1,13 +1,10 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {
-  provideHttpClient,
-  withInterceptorsFromDi,
-} from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ProfileImplementationRepository } from './repositories/profile-implementation.repository';
 import { ProfileRepository } from '../domain/repositories/profile.repository';
 import { GetAuthProfileUseCase } from '../use-cases/get-auth-profile.usecase';
 import { SetAuthProfileUseCase } from '../use-cases/set-auth-profile.usecase';
+import { authInterceptor } from '../../shared/interceptors/auth.interceptor';
 
 const getAuthProfileUseCaseFactory = (profileRepo: ProfileRepository) =>
   new GetAuthProfileUseCase(profileRepo);
@@ -27,11 +24,11 @@ export const setAuthProfileUseCaseProvider = {
 
 @NgModule({
   providers: [
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withInterceptors([authInterceptor])),
     getAuthProfileUseCaseProvider,
     setAuthProfileUseCaseProvider,
     { provide: ProfileRepository, useClass: ProfileImplementationRepository },
   ],
-  imports: [CommonModule],
+  imports: [],
 })
 export class ProfileDataModule {}

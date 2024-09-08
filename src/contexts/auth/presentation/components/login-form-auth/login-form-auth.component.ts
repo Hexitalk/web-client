@@ -6,11 +6,23 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthLoginUseCase } from '../../../use-cases/auth-login.usecase';
+import { AuthDataModule } from '../../../data/auth-data.module';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login-form-auth',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [
+    ReactiveFormsModule,
+    AuthDataModule,
+    ButtonModule,
+    CardModule,
+    InputTextModule,
+    RouterModule,
+  ],
   templateUrl: './login-form-auth.component.html',
   styleUrl: './login-form-auth.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

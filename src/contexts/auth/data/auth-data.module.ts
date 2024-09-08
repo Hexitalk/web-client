@@ -1,10 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {
-  provideHttpClient,
-  withInterceptors,
-  withInterceptorsFromDi,
-} from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AuthImplementationRepository } from './repositories/auth-implementation.repository';
 import { AuthRepository } from '../domain/repositories/auth.repository';
 import { AuthLoginUseCase } from '../use-cases/auth-login.usecase';
@@ -63,7 +58,7 @@ export const setAuthTokenUseCaseProvider = {
     setAuthTokenUseCaseProvider,
     { provide: AuthRepository, useClass: AuthImplementationRepository },
   ],
-  imports: [CommonModule, UserDataModule],
+  imports: [UserDataModule],
 })
 export class AuthDataModule {
   /* */

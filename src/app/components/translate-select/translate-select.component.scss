@@ -1,0 +1,20 @@
+:host {
+  width: 100%;
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+}
+
+div {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: end;
+  padding-top: 1rem;
+}
+::ng-deep {
+  .p-menubar.p-component {
+    background-color: transparent;
+    border: 0;
+  }
+}
