@@ -32,7 +32,7 @@ export class AppComponent {
     const token = await firstValueFrom(this.getAuthTokenUseCase.execute());
 
     if (token) {
-      this.router.navigate(['/profiles/home']);
+      this.router.navigate(['/hub/main']);
     }
   }
 }

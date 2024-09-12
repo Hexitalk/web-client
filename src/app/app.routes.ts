@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
+import { authLazyGuard } from '../contexts/shared/guards/auth-lazy.guard';
 
 export const routes: Routes = [
   {
@@ -14,11 +15,13 @@ export const routes: Routes = [
   },
   {
     path: 'user',
+    canMatch: [authLazyGuard],
     loadChildren: () =>
       import('../contexts/user/routes/user-routes').then((m) => m.USER_ROUTES),
   },
   {
     path: 'friend',
+    canMatch: [authLazyGuard],
     loadChildren: () =>
       import('../contexts/friend/routes/friend-routes').then(
         (m) => m.FRIEND_ROUTES
@@ -26,10 +29,17 @@ export const routes: Routes = [
   },
   {
     path: 'profile',
+    canMatch: [authLazyGuard],
     loadChildren: () =>
       import('../contexts/profile/routes/profile-routes').then(
         (m) => m.PROFILE_ROUTES
       ),
+  },
+  {
+    path: 'hub',
+    canMatch: [authLazyGuard],
+    loadChildren: () =>
+      import('../contexts/hub/routes/hub-routes').then((m) => m.HUB_ROUTES),
   },
   { path: '**', component: PageNotFoundComponent },
 

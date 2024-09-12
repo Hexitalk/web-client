@@ -34,6 +34,12 @@ export class AuthImplementationRepository extends AuthRepository {
 
   constructor(private http: HttpClient) {
     super();
+
+    const localStorageToken: string | null =
+      localStorage.getItem('hexital_auth_token');
+    if (localStorageToken) {
+      this.token = localStorageToken;
+    }
   }
 
   login(params: {
@@ -79,6 +85,7 @@ export class AuthImplementationRepository extends AuthRepository {
 
   setAuthToken(token: string): Observable<void> {
     this.token = token;
+    localStorage.setItem('hexital_auth_token', this.token);
     return of(undefined);
   }
 }

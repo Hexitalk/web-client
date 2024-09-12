@@ -10,15 +10,16 @@ import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideTransloco } from '@ngneat/transloco';
 import { TranslocoHttpLoader } from '../contexts/shared/services/transloco-loader';
-import { auth2Interceptor } from '../contexts/shared/interceptors/auth2.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { authInterceptor } from '../contexts/shared/interceptors/auth.interceptor';
+import { AuthDataModule } from '../contexts/auth/data/auth-data.module';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideHttpClient(withInterceptors([auth2Interceptor])),
+    provideHttpClient(/*withInterceptors([authInterceptor])*/),
     provideRouter(routes),
-    importProvidersFrom([BrowserAnimationsModule]),
+    importProvidersFrom([BrowserAnimationsModule, AuthDataModule]),
     provideTransloco({
       config: {
         availableLangs: ['en', 'es'],
