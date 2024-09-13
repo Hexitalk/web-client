@@ -5,6 +5,7 @@ import { firstValueFrom } from 'rxjs';
 import { AuthDataModule } from '../contexts/auth/data/auth-data.module';
 import { TranslocoModule } from '@ngneat/transloco';
 import { PrimeNGConfig } from 'primeng/api';
+import { Socket } from 'ngx-socket-io';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,8 @@ export class AppComponent {
   constructor(
     private getAuthTokenUseCase: GetAuthTokenUseCase,
     private router: Router,
-    private primengConfig: PrimeNGConfig
+    private primengConfig: PrimeNGConfig,
+    private socket: Socket
   ) {}
 
   ngOnInit() {
