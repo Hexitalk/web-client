@@ -10,6 +10,8 @@ import { UserRepository } from '../../user/domain/repositories/user.repository';
 import { ProfileRepository } from '../../profile/domain/repositories/profile.repository';
 import { UserDataModule } from '../../user/data/user-data.module';
 import { authInterceptor } from '../../shared/interceptors/auth.interceptor';
+import { AuthSocketIoService } from './socket/auth-socket-io.service';
+import { AuthSocketService } from '../domain/socket/auth-socket.service';
 
 const authLoginUseCaseFactory = (
   authRepo: AuthRepository,
@@ -49,6 +51,8 @@ export const setAuthTokenUseCaseProvider = {
   deps: [AuthRepository],
 };
 
+// Socket
+
 @NgModule({
   providers: [
     provideHttpClient(withInterceptors([authInterceptor])),
@@ -57,6 +61,7 @@ export const setAuthTokenUseCaseProvider = {
     getAuthTokenUseCaseProvider,
     setAuthTokenUseCaseProvider,
     { provide: AuthRepository, useClass: AuthImplementationRepository },
+    { provide: AuthSocketService, useClass: AuthSocketIoService },
   ],
   imports: [UserDataModule],
 })
