@@ -12,6 +12,7 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { RouterModule } from '@angular/router';
+import { Socket } from 'ngx-socket-io';
 
 @Component({
   selector: 'app-register-form-auth',
@@ -34,7 +35,8 @@ export class RegisterFormAuthComponent {
 
   constructor(
     private fb: FormBuilder,
-    private authRegisterUseCase: AuthRegisterUseCase
+    private authRegisterUseCase: AuthRegisterUseCase,
+    private socket: Socket
   ) {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -68,6 +70,10 @@ export class RegisterFormAuthComponent {
       this.authRegisterUseCase.execute(this.registerForm.value).subscribe({
         next: (res) => {
           console.log('response:', res);
+          this.socket.emit('auth.login-socket', {
+            token: res.token,
+            lang: 'en',
+          });
         },
         error: (err) => {
           console.log('error from server AA_ ', err);

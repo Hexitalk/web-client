@@ -15,7 +15,13 @@ import { AuthDataModule } from '../contexts/auth/data/auth-data.module';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { environment } from '../environments/environment.prod';
 
-const config: SocketIoConfig = { url: environment.socketUrl, options: {} };
+const configSocketIo: SocketIoConfig = {
+  url: `${environment.socketUrl}`,
+  options: {
+    transports: ['websocket'],
+    reconnection: true,
+  },
+};
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,7 +31,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom([
       BrowserAnimationsModule,
       AuthDataModule,
-      SocketIoModule.forRoot(config),
+      SocketIoModule.forRoot(configSocketIo),
     ]),
     provideTransloco({
       config: {

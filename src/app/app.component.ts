@@ -23,6 +23,25 @@ export class AppComponent {
   ) {}
 
   ngOnInit() {
+    //
+
+    //this.socket.connect();
+    console.log('APP INIT 2');
+
+    // Escuchar cuando el cliente se conecte
+    this.socket.on('connect', () => {
+      console.log('Conectado al servidor WebSocket');
+    });
+
+    // Escuchar cuando el cliente se desconecte
+    this.socket.on('disconnect', () => {
+      console.log('Desconectado del servidor WebSocket');
+    });
+
+    setTimeout(() => {
+      this.socket.emit('test', { msg: 'is test' });
+    }, 5000);
+
     // PrimeNG Config
     this.primengConfig.ripple = true;
 
