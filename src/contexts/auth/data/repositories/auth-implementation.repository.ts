@@ -1,5 +1,11 @@
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {
+  BehaviorSubject,
+  Observable,
+  of,
+  ReplaySubject,
+  throwError,
+} from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthRepository } from '../../domain/repositories/auth.repository';
@@ -30,16 +36,11 @@ export class AuthImplementationRepository extends AuthRepository {
   userMapper = new UserImplementationRepositoryMapper();
   profileMapper = new ProfileImplementationRepositoryMapper();
 
-  token: string = '';
+  // private tokenSubject = new BehaviorSubject<string>(this.loadToken());
+  private tokenSubject = new ReplaySubject<string>();
 
   constructor(private http: HttpClient) {
     super();
-
-    const localStorageToken: string | null =
-      localStorage.getItem('hexital_auth_token');
-    if (localStorageToken) {
-      this.token = localStorageToken;
-    }
   }
 
   login(params: {
@@ -75,17 +76,28 @@ export class AuthImplementationRepository extends AuthRepository {
             user: this.userMapper.mapFrom(res.user),
             profile: this.profileMapper.mapFrom(res.profile),
           };
+        }),
+        catchError((err) => {
+          console.log('error!!!!¿¿¿¿');
+          return throwError(() => err);
         })
       );
   }
 
-  getAuthToken(): Observable<string> {
-    return of(this.token);
+  // private loadToken(): string {
+  //   return localStorage.getItem('hexitalk_auth_token') || '';
+  // }
+
+  getAuthToken(): string {
+    return localStorage.getItem('hexitalk_auth_token') || '';
   }
 
-  setAuthToken(token: string): Observable<void> {
-    this.token = token;
-    localStorage.setItem('hexital_auth_token', this.token);
-    return of(undefined);
+  listenAuthToken(): Observable<string> {
+    return this.tokenSubject.asObservable();
+  }
+
+  setAuthToken(token: string): void {
+    localStorage.setItem('hexitalk_auth_token', token);
+    this.tokenSubject.next(token);
   }
 }

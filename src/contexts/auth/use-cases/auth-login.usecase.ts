@@ -1,5 +1,5 @@
 import { Observable, switchMap, tap } from 'rxjs';
-import { UseCase } from '../../shared/base/use-case';
+import { UseCase, UseCaseObservable } from '../../shared/base/use-case';
 import { AuthRepository } from '../domain/repositories/auth.repository';
 import { UserModel } from '../../user/domain/models/user.model';
 import { ProfileModel } from '../../profile/domain/models/profile.model';
@@ -14,7 +14,10 @@ interface AuthLoginUseCaseResultType {
 
 export class AuthLoginUseCase
   implements
-    UseCase<{ email: string; password: string }, AuthLoginUseCaseResultType>
+    UseCaseObservable<
+      { email: string; password: string },
+      AuthLoginUseCaseResultType
+    >
 {
   constructor(
     private authRepository: AuthRepository,

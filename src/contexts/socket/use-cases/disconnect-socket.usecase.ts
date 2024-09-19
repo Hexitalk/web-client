@@ -11,7 +11,7 @@ export class DisconnectSocketUseCase implements UseCase<string, void> {
    * @param
    * @returns
    */
-  execute(): Observable<void> {
-    return of(this.mainSocketService.disconnect());
+  execute(): void {
+    this.mainSocketService.disconnect();
   }
 }

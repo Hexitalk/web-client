@@ -10,7 +10,8 @@ import { AuthDataModule } from '../../../data/auth-data.module';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { AuthSocketLoginUseCase } from '../../../use-cases/auth-socket-login.usecase';
 
 @Component({
   selector: 'app-login-form-auth',
@@ -32,12 +33,14 @@ export class LoginFormAuthComponent {
 
   constructor(
     private fb: FormBuilder,
-    private authLoginUseCase: AuthLoginUseCase
+    private authLoginUseCase: AuthLoginUseCase,
+    private authSocketLoginUseCase: AuthSocketLoginUseCase,
+    private router: Router
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['yolo@yolo.com', [Validators.required, Validators.email]],
       password: [
-        '',
+        'Con1234',
         [
           Validators.required,
           Validators.minLength(6),
@@ -49,14 +52,13 @@ export class LoginFormAuthComponent {
 
   onSubmit(): void {
     if (this.loginForm.valid) {
-      console.log('1- Formulario válido', this.loginForm.value);
-
       this.authLoginUseCase.execute(this.loginForm.value).subscribe({
         next: (res) => {
-          console.log('response:', res);
+          this.authSocketLoginUseCase.execute();
+          this.router.navigate(['/hub/main']);
         },
         error: (err) => {
-          console.log('error from server AA_ ', err);
+          console.log('Login error', err);
         },
       });
     }

@@ -7,6 +7,7 @@ import { ReconnectSocketUseCase } from '../use-cases/reconnect-socket.usecase';
 import { ListenConnectSocketUseCase } from '../use-cases/listen-connect-socket.usecase';
 import { ListenErrorSocketUseCase } from '../use-cases/listen-error-socket.usecase';
 import { ListenReconnectSocketUseCase } from '../use-cases/listen-reconnect-socket.usecase';
+import { ListenDisconnectSocketUseCase } from '../use-cases/listen-disconnect-socket.usecase';
 
 const disconectSocketUseCaseFactory = (mainSocketService: MainSocketService) =>
   new DisconnectSocketUseCase(mainSocketService);
@@ -51,6 +52,15 @@ export const listenReconnectSocketUseCaseProvider = {
   deps: [MainSocketService],
 };
 
+const listenDisconnectSocketUseCaseFactory = (
+  mainSocketService: MainSocketService
+) => new ListenDisconnectSocketUseCase(mainSocketService);
+export const listenDisconnectSocketUseCaseProvider = {
+  provide: ListenDisconnectSocketUseCase,
+  useFactory: listenDisconnectSocketUseCaseFactory,
+  deps: [MainSocketService],
+};
+
 @NgModule({
   providers: [
     provideHttpClient(/* withInterceptors([authInterceptor])*/),
@@ -59,6 +69,7 @@ export const listenReconnectSocketUseCaseProvider = {
     listenConnectSocketUseCaseProvider,
     listenErrorSocketUseCaseProvider,
     listenReconnectSocketUseCaseProvider,
+    listenDisconnectSocketUseCaseProvider,
     { provide: MainSocketService, useClass: MainSocketIoService },
   ],
   imports: [],

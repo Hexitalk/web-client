@@ -27,6 +27,10 @@ export class MainSocketIoService extends MainSocketService {
     return this.socket.fromEvent('connect');
   }
 
+  onDisconnect(): Observable<any> {
+    return this.socket.fromEvent('disconnect');
+  }
+
   onError(): Observable<any> {
     return this.socket.fromEvent('connect_error');
   }

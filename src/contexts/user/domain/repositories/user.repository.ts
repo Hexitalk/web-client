@@ -3,6 +3,8 @@ import { UserModel } from '../models/user.model';
 
 export abstract class UserRepository {
   abstract getAuthUser(): Observable<UserModel | undefined>;
-  abstract setAuthUser(profile: UserModel): Observable<void>;
+  abstract setAuthUser(profile: UserModel): void;
+  abstract clearAuthUser(): void;
+
   // abstract getUserProfile(): Observable<UserModel>;
 }

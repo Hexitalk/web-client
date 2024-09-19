@@ -7,9 +7,9 @@ export class GetAuthTokenUseCase implements UseCase<void, string> {
 
   /**
    *
-   * @returns Observable<string>
+   * @returns string
    */
-  execute(): Observable<string> {
+  execute(): string {
     return this.authRepository.getAuthToken();
   }
 }

@@ -12,6 +12,10 @@ import { UserDataModule } from '../../user/data/user-data.module';
 import { authInterceptor } from '../../shared/interceptors/auth.interceptor';
 import { AuthSocketIoService } from './socket/auth-socket-io.service';
 import { AuthSocketService } from '../domain/socket/auth-socket.service';
+import { AuthSocketLoginUseCase } from '../use-cases/auth-socket-login.usecase';
+import { ListenAuthTokenUseCase } from '../use-cases/listen-auth-token.usecase';
+import { AuthLogoutUseCase } from '../use-cases/auth-logout.usecase';
+import { AuthSocketLogoutUseCase } from '../use-cases/auth-socket-logout.usecase';
 
 const authLoginUseCaseFactory = (
   authRepo: AuthRepository,
@@ -43,12 +47,51 @@ export const getAuthTokenUseCaseProvider = {
   deps: [AuthRepository],
 };
 
+const listenAuthTokenUseCaseFactory = (authRepo: AuthRepository) =>
+  new ListenAuthTokenUseCase(authRepo);
+export const listenAuthTokenUseCaseProvider = {
+  provide: ListenAuthTokenUseCase,
+  useFactory: listenAuthTokenUseCaseFactory,
+  deps: [AuthRepository],
+};
+
 const setAuthTokenUseCaseFactory = (authRepo: AuthRepository) =>
   new SetAuthTokenUseCase(authRepo);
 export const setAuthTokenUseCaseProvider = {
   provide: SetAuthTokenUseCase,
   useFactory: setAuthTokenUseCaseFactory,
   deps: [AuthRepository],
+};
+
+const authLogoutUseCaseFactory = (
+  authRepo: AuthRepository,
+  userRepo: UserRepository,
+  profileRepo: ProfileRepository
+) => new AuthLogoutUseCase(authRepo, userRepo, profileRepo);
+export const authLogoutUseCaseProvider = {
+  provide: AuthLogoutUseCase,
+  useFactory: authLogoutUseCaseFactory,
+  deps: [AuthRepository, UserRepository, ProfileRepository],
+};
+
+const authSocketLoginUseCaseFactory = (
+  authRepo: AuthRepository,
+  authSocketService: AuthSocketService
+) => new AuthSocketLoginUseCase(authRepo, authSocketService);
+export const authSocketLoginUseCaseProvider = {
+  provide: AuthSocketLoginUseCase,
+  useFactory: authSocketLoginUseCaseFactory,
+  deps: [AuthRepository, AuthSocketService],
+};
+
+const authSocketLogoutUseCaseFactory = (
+  authRepo: AuthRepository,
+  authSocketService: AuthSocketService
+) => new AuthSocketLogoutUseCase(authRepo, authSocketService);
+export const authSocketLogoutUseCaseProvider = {
+  provide: AuthSocketLogoutUseCase,
+  useFactory: authSocketLogoutUseCaseFactory,
+  deps: [AuthRepository, AuthSocketService],
 };
 
 // Socket
@@ -60,6 +103,10 @@ export const setAuthTokenUseCaseProvider = {
     authRegisterUseCaseProvider,
     getAuthTokenUseCaseProvider,
     setAuthTokenUseCaseProvider,
+    listenAuthTokenUseCaseProvider,
+    authLogoutUseCaseProvider,
+    authSocketLoginUseCaseProvider,
+    authSocketLogoutUseCaseProvider,
     { provide: AuthRepository, useClass: AuthImplementationRepository },
     { provide: AuthSocketService, useClass: AuthSocketIoService },
   ],

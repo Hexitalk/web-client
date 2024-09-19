@@ -24,8 +24,11 @@ export class UserImplementationRepository extends UserRepository {
     return of(this.user);
   }
 
-  setAuthUser(profile: UserModel): Observable<void> {
+  setAuthUser(profile: UserModel): void {
     this.user = profile;
-    return of(undefined);
+  }
+
+  clearAuthUser(): void {
+    this.user = undefined;
   }
 }

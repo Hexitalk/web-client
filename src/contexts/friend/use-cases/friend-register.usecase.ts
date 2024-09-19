@@ -1,10 +1,11 @@
 import { Observable } from 'rxjs';
-import { UseCase } from '../../shared/base/use-case';
+import { UseCaseObservable } from '../../shared/base/use-case';
 import { FriendModel } from '../domain/models/friend.model';
 import { FriendRepository } from '../domain/repositories/friend.repository';
 
 export class FriendRegisterUseCase
-  implements UseCase<{ phoneNum: string; password: string }, FriendModel>
+  implements
+    UseCaseObservable<{ phoneNum: string; password: string }, FriendModel>
 {
   constructor(private friendRepository: FriendRepository) {}
 

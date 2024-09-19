@@ -1,8 +1,10 @@
 import { map, Observable, of, switchMap, tap } from 'rxjs';
-import { UseCase } from '../../shared/base/use-case';
+import { UseCaseObservable } from '../../shared/base/use-case';
 import { MainSocketService } from '../domain/socket/main-socket.service';
 
-export class ReconnectSocketUseCase implements UseCase<string, void> {
+export class ListenDisconnectSocketUseCase
+  implements UseCaseObservable<string, void>
+{
   constructor(private mainSocketService: MainSocketService) {}
 
   /**
@@ -11,7 +13,7 @@ export class ReconnectSocketUseCase implements UseCase<string, void> {
    * @param
    * @returns
    */
-  execute(): void {
-    this.mainSocketService.reconnect();
+  execute(): Observable<void> {
+    return this.mainSocketService.onDisconnect();
   }
 }

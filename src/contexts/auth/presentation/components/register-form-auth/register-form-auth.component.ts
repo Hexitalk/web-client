@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { AuthRegisterUseCase } from '../../../use-cases/auth-register.usecase';
 import {
   FormBuilder,
@@ -11,8 +11,10 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Socket } from 'ngx-socket-io';
+import { AuthSocketLoginUseCase } from '../../../use-cases/auth-socket-login.usecase';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register-form-auth',
@@ -30,13 +32,16 @@ import { Socket } from 'ngx-socket-io';
   styleUrl: './register-form-auth.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegisterFormAuthComponent {
+export class RegisterFormAuthComponent implements OnDestroy {
   registerForm: FormGroup;
+
+  private subscriptionAuthRegister?: Subscription;
 
   constructor(
     private fb: FormBuilder,
+    private router: Router,
     private authRegisterUseCase: AuthRegisterUseCase,
-    private socket: Socket
+    private authSocketLoginUseCase: AuthSocketLoginUseCase
   ) {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -65,32 +70,23 @@ export class RegisterFormAuthComponent {
 
   onSubmit(): void {
     if (this.registerForm.valid) {
-      console.log('1- Formulario válido', this.registerForm.value);
+      this.subscriptionAuthRegister = this.authRegisterUseCase
+        .execute(this.registerForm.value)
+        .subscribe({
+          next: (res) => {
+            this.authSocketLoginUseCase.execute();
+            this.router.navigate(['/hub/main']);
+          },
+          error: (err) => {
+            console.log('Register error', err);
+          },
+        });
+    }
+  }
 
-      this.authRegisterUseCase.execute(this.registerForm.value).subscribe({
-        next: (res) => {
-          console.log('response:', res);
-          this.socket.emit('auth.login-socket', {
-            token: res.token,
-            lang: 'en',
-          });
-        },
-        error: (err) => {
-          console.log('error from server AA_ ', err);
-        },
-      });
+  ngOnDestroy(): void {
+    if (this.subscriptionAuthRegister) {
+      this.subscriptionAuthRegister.unsubscribe();
     }
   }
 }
-
-/*
-
-email: string;
-  password: string;
-  nick: string;
-  image?: string;
-  date_birth: Date;+
-  gender: string;
-  province_id: string;
-  country_id: string;
-*/

@@ -6,7 +6,7 @@ import { UserRepository } from '../domain/repositories/user.repository';
 export class SetAuthUserUseCase implements UseCase<UserModel, void> {
   constructor(private userRepository: UserRepository) {}
 
-  execute(params: UserModel): Observable<void> {
-    return this.userRepository.setAuthUser(params);
+  execute(params: UserModel): void {
+    this.userRepository.setAuthUser(params);
   }
 }

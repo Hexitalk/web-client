@@ -6,4 +6,5 @@ export abstract class MainSocketService {
   abstract onReconnect(): Observable<any>;
   abstract onConnect(): Observable<any>;
   abstract onError(): Observable<any>;
+  abstract onDisconnect(): Observable<any>;
 }

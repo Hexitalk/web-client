@@ -1,1 +1,24 @@
+<div class="menu-container">
+  <p-menubar [model]="menuItems">
+    <ng-template pTemplate="start">
+      <a routerLink="/"
+        ><img
+          src="/images/logo_big.png"
+          height="30"
+          class="logo-menu-bar"
+          alt="brand logo"
+      /></a>
+    </ng-template>
+    <ng-template pTemplate="end">
+      <!-- Avatar a la derecha -->
+      <p-avatar label="A" (click)="avatarMenu.toggle($event)"></p-avatar>
+
+      <!-- Menú desplegable para el avatar -->
+      <p-overlayPanel #avatarMenu [dismissable]="true">
+        <p-menu [model]="avatarMenuItems"></p-menu>
+      </p-overlayPanel>
+    </ng-template>
+  </p-menubar>
+</div>
+
 <router-outlet></router-outlet>

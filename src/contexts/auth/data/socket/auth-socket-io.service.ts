@@ -14,4 +14,8 @@ export class AuthSocketIoService extends AuthSocketService {
   login(token: string): void {
     this.socket.emit('auth.login-socket', { token });
   }
+
+  logout(): void {
+    this.socket.emit('auth.logout-socket', {});
+  }
 }

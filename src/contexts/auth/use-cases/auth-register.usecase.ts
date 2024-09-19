@@ -1,5 +1,5 @@
 import { Observable, switchMap, tap } from 'rxjs';
-import { UseCase } from '../../shared/base/use-case';
+import { UseCaseObservable } from '../../shared/base/use-case';
 import { AuthRepository } from '../domain/repositories/auth.repository';
 import { UserModel } from '../../user/domain/models/user.model';
 import { ProfileModel } from '../../profile/domain/models/profile.model';
@@ -14,7 +14,10 @@ interface AuthLoginUseCaseResultType {
 
 export class AuthRegisterUseCase
   implements
-    UseCase<Partial<UserModel & ProfileModel>, AuthLoginUseCaseResultType>
+    UseCaseObservable<
+      Partial<UserModel & ProfileModel>,
+      AuthLoginUseCaseResultType
+    >
 {
   constructor(
     private authRepository: AuthRepository,
@@ -30,13 +33,13 @@ export class AuthRegisterUseCase
         const { user, profile } = loginResult;
         user && this.userRepository.setAuthUser(user);
         profile && this.profileRepository.setAuthProfile(profile);
-      }),
-      switchMap((loginResult) => {
+      })
+      /*switchMap((loginResult) => {
         return new Observable<AuthLoginUseCaseResultType>((observer) => {
           observer.next(loginResult);
           observer.complete();
         });
-      })
+      })*/
     );
     // return this.authRepository.register(params);
   }

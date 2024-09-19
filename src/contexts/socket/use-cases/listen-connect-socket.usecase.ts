@@ -1,8 +1,10 @@
 import { map, Observable, of, switchMap, tap } from 'rxjs';
-import { UseCase } from '../../shared/base/use-case';
+import { UseCaseObservable } from '../../shared/base/use-case';
 import { MainSocketService } from '../domain/socket/main-socket.service';
 
-export class ListenConnectSocketUseCase implements UseCase<string, void> {
+export class ListenConnectSocketUseCase
+  implements UseCaseObservable<string, void>
+{
   constructor(private mainSocketService: MainSocketService) {}
 
   /**

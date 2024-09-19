@@ -1,46 +1,61 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { GetAuthTokenUseCase } from '../contexts/auth/use-cases/get-auth-token.usecase';
-import { firstValueFrom } from 'rxjs';
-import { AuthDataModule } from '../contexts/auth/data/auth-data.module';
+import { firstValueFrom, merge, Subject, switchMap, takeUntil } from 'rxjs';
+import {
+  AuthDataModule,
+  setAuthTokenUseCaseProvider,
+} from '../contexts/auth/data/auth-data.module';
 import { TranslocoModule } from '@ngneat/transloco';
 import { PrimeNGConfig } from 'primeng/api';
-import { Socket } from 'ngx-socket-io';
+import { SocketDataModule } from '../contexts/socket/data/socket-data.module';
+import { ListenReconnectSocketUseCase } from '../contexts/socket/use-cases/listen-reconnect-socket.usecase';
+import { ListenConnectSocketUseCase } from '../contexts/socket/use-cases/listen-connect-socket.usecase';
+import { AuthSocketLoginUseCase } from '../contexts/auth/use-cases/auth-socket-login.usecase';
+import { ListenDisconnectSocketUseCase } from '../contexts/socket/use-cases/listen-disconnect-socket.usecase';
+import { SetAuthTokenUseCase } from '../contexts/auth/use-cases/set-auth-token.usecase';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, AuthDataModule, TranslocoModule],
+  imports: [RouterOutlet, AuthDataModule, TranslocoModule, SocketDataModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+
   constructor(
     private getAuthTokenUseCase: GetAuthTokenUseCase,
     private router: Router,
     private primengConfig: PrimeNGConfig,
-    private socket: Socket
+    private listenReconnectSocketUseCase: ListenReconnectSocketUseCase,
+    private listenConnectSocketUseCase: ListenConnectSocketUseCase,
+    private listenDisconnectSocketUseCase: ListenDisconnectSocketUseCase,
+    private authSocketLoginUseCase: AuthSocketLoginUseCase,
+    private setAuthTokenUseCase: SetAuthTokenUseCase
   ) {}
 
   ngOnInit() {
-    //
+    // Socket
 
-    //this.socket.connect();
-    console.log('APP INIT 2');
+    const connectionEvents$ = merge(
+      this.listenConnectSocketUseCase.execute(),
+      this.listenReconnectSocketUseCase.execute()
+    );
 
-    // Escuchar cuando el cliente se conecte
-    this.socket.on('connect', () => {
-      console.log('Conectado al servidor WebSocket');
+    connectionEvents$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: () => {
+        this.authSocketLoginUseCase.execute();
+      },
     });
 
-    // Escuchar cuando el cliente se desconecte
-    this.socket.on('disconnect', () => {
-      console.log('Desconectado del servidor WebSocket');
-    });
-
-    setTimeout(() => {
-      this.socket.emit('test', { msg: 'is test' });
-    }, 5000);
+    this.listenDisconnectSocketUseCase
+      .execute()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        console.log('socket: user disconnected');
+      });
 
     // PrimeNG Config
     this.primengConfig.ripple = true;
@@ -50,10 +65,16 @@ export class AppComponent {
   }
 
   async redirectAuth() {
-    const token = await firstValueFrom(this.getAuthTokenUseCase.execute());
+    const token = this.getAuthTokenUseCase.execute();
 
     if (token) {
       this.router.navigate(['/hub/main']);
     }
+  }
+
+  ngOnDestroy() {
+    // Completa el Subject para cancelar todas las suscripciones
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

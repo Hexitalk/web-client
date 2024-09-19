@@ -27,9 +27,12 @@ export class ProfileImplementationRepository extends ProfileRepository {
     //return of(this.profile);
   }
 
-  setAuthProfile(profile: ProfileModel): Observable<void> {
+  setAuthProfile(profile: ProfileModel): void {
     this.profile = profile;
-    return of(undefined);
+  }
+
+  clearAuthProfile(): void {
+    this.profile = undefined;
   }
 
   /* getProfileProfile(): Observable<ProfileModel> {

@@ -16,6 +16,7 @@ export abstract class AuthRepository {
   abstract register(
     params: Partial<UserModel & ProfileModel>
   ): Observable<AuthLoginUseCaseResultType>;
-  abstract getAuthToken(): Observable<string>;
-  abstract setAuthToken(token: string): Observable<void>;
+  abstract getAuthToken(): string;
+  abstract listenAuthToken(): Observable<string>;
+  abstract setAuthToken(token: string): void;
 }

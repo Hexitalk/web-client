@@ -1,10 +1,10 @@
 import { Observable } from 'rxjs';
-import { UseCase } from '../../shared/base/use-case';
+import { UseCaseObservable } from '../../shared/base/use-case';
 import { UserModel } from '../domain/models/user.model';
 import { UserRepository } from '../domain/repositories/user.repository';
 
 export class GetAuthUserUseCase
-  implements UseCase<void, UserModel | undefined>
+  implements UseCaseObservable<void, UserModel | undefined>
 {
   constructor(private userRepository: UserRepository) {}
 
