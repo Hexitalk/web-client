@@ -6,6 +6,9 @@ import { GetAuthProfileUseCase } from '../use-cases/get-auth-profile.usecase';
 import { SetAuthProfileUseCase } from '../use-cases/set-auth-profile.usecase';
 import { authInterceptor } from '../../shared/interceptors/auth.interceptor';
 import { ClearAuthProfileUseCase } from '../use-cases/clear-auth-profile.usecase';
+import { ListenProfileInfoUseCase } from '../use-cases/listen-profile-info.usecase';
+import { ProfileSocketService } from '../domain/socket/profiles-socket.service';
+import { ProfileSocketIoService } from './socket/profiles-socket-io.service';
 
 const getAuthProfileUseCaseFactory = (profileRepo: ProfileRepository) =>
   new GetAuthProfileUseCase(profileRepo);
@@ -31,13 +34,23 @@ export const clearAuthProfileUseCaseProvider = {
   deps: [ProfileRepository],
 };
 
+const listenProfileInfoUseCaseFactory = (profileSocket: ProfileSocketService) =>
+  new ListenProfileInfoUseCase(profileSocket);
+export const listenProfileInfoUseCaseProvider = {
+  provide: ListenProfileInfoUseCase,
+  useFactory: listenProfileInfoUseCaseFactory,
+  deps: [ProfileSocketService],
+};
+
 @NgModule({
   providers: [
     provideHttpClient(withInterceptors([authInterceptor])),
     getAuthProfileUseCaseProvider,
     setAuthProfileUseCaseProvider,
     clearAuthProfileUseCaseProvider,
+    listenProfileInfoUseCaseProvider,
     { provide: ProfileRepository, useClass: ProfileImplementationRepository },
+    { provide: ProfileSocketService, useClass: ProfileSocketIoService },
   ],
   imports: [],
 })

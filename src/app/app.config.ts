@@ -20,6 +20,9 @@ const configSocketIo: SocketIoConfig = {
   options: {
     transports: ['websocket'],
     reconnection: true,
+    extraHeaders: {
+      Authorization: `Bearer `,
+    },
   },
 };
 

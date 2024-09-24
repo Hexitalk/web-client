@@ -7,7 +7,7 @@ export class HubImplementationRepositoryMapper extends Mapper<
   HubEntity,
   HubModel
 > {
-  hubChatMapper = new HubChatImplementationRepositoryMapper();
+  private hubChatMapper = new HubChatImplementationRepositoryMapper();
 
   mapFrom(param: HubEntity): HubModel {
     return {

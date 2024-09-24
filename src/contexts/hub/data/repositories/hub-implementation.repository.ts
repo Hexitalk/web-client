@@ -7,12 +7,17 @@ import { environment } from '../../../../environments/environment.prod';
 import { HubRepository } from '../../domain/repositories/hub.repository';
 import { HubImplementationRepositoryMapper } from './mappers/hub-repository.mapper';
 import { HubEntity } from './entities/hub-entity';
+import { HubChatStateEnum } from '../../domain/enums';
+import { HubChatModel } from '../../domain/models/hub-chat.model';
+import { HubChatImplementationRepositoryMapper } from './mappers/hub-chat-repository.mapper';
+import { HubChatEntity } from './entities/hub-chat.entity';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HubImplementationRepository extends HubRepository {
   hubMapper = new HubImplementationRepositoryMapper();
+  hubChatMapper = new HubChatImplementationRepositoryMapper();
 
   constructor(private http: HttpClient) {
     super();
@@ -20,7 +25,7 @@ export class HubImplementationRepository extends HubRepository {
 
   getHub(): Observable<HubModel> {
     return this.http
-      .post<HubEntity>(`${environment.apiUrl}/auth/register`, {})
+      .post<HubEntity>(`${environment.apiUrl}/hub/get-hub`, {})
       .pipe(
         map((res) => {
           return this.hubMapper.mapFrom(res);
@@ -28,10 +33,21 @@ export class HubImplementationRepository extends HubRepository {
       );
   }
 
-  // getHub(): Observable<HubModel> {
-  //   return new Observable<HubModel>((observer) => {
-  //     observer.next(this.hub);
-  //     observer.complete();
-  //   });
-  // }
+  setHubChatState(params: {
+    slot: number;
+    state: HubChatStateEnum;
+  }): Observable<HubChatModel> {
+    return this.http
+      .post<{ hubChat: HubChatEntity }>(
+        `${environment.apiUrl}/hub/set-hub-chat-state`,
+        {
+          params,
+        }
+      )
+      .pipe(
+        map((res) => {
+          return this.hubChatMapper.mapFrom(res.hubChat);
+        })
+      );
+  }
 }

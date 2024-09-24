@@ -16,6 +16,7 @@ import { AuthSocketLoginUseCase } from '../use-cases/auth-socket-login.usecase';
 import { ListenAuthTokenUseCase } from '../use-cases/listen-auth-token.usecase';
 import { AuthLogoutUseCase } from '../use-cases/auth-logout.usecase';
 import { AuthSocketLogoutUseCase } from '../use-cases/auth-socket-logout.usecase';
+import { SocketDataModule } from '../../socket/data/socket-data.module';
 
 const authLoginUseCaseFactory = (
   authRepo: AuthRepository,
@@ -110,7 +111,7 @@ export const authSocketLogoutUseCaseProvider = {
     { provide: AuthRepository, useClass: AuthImplementationRepository },
     { provide: AuthSocketService, useClass: AuthSocketIoService },
   ],
-  imports: [UserDataModule],
+  imports: [UserDataModule, SocketDataModule],
 })
 export class AuthDataModule {
   /* */

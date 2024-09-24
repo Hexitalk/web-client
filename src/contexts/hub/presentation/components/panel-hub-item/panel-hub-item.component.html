@@ -1,0 +1,42 @@
+@if(hubChat){
+<div class="hub-item-container">
+  @if(hubChat.target_profile){
+  <div
+    class="profile-image"
+    [ngClass]="{ online: hubChat.target_profile.online_status }"
+  >
+    <img src="/images/profile_test_5.PNG" />
+  </div>
+  <!-- <p-button icon="pi pi-comment" [rounded]="true" severity="success" /> -->
+
+  <div class="profile-name">{{ hubChat.target_profile.nick }}</div>
+  } @else{ @switch (hubChat.state) { @case (StateEnum.CLOSE) {
+  <p-button
+    label="Find chat"
+    icon="pi pi-comment"
+    severity="primary"
+    (onClick)="startHubChatSearch()"
+  />
+  } @case (StateEnum.OPEN) {
+  <div class="state-open">
+    <p-button
+      label="Cancel"
+      icon="pi pi-times"
+      severity="danger"
+      (onClick)="stopHubChatSearch()"
+    />
+
+    <div class="search-chat-loading">
+      <p-progressSpinner
+        strokeWidth="8"
+        fill="transparent"
+        animationDuration="3s"
+        [style]="{ width: '1.2rem', height: '1.2rem' }"
+      />
+      <span>Searching...</span>
+    </div>
+  </div>
+  } @case (StateEnum.CLOSE) { } @case (StateEnum.CLOSE) { } @case
+  (StateEnum.CLOSE) { } } }
+</div>
+}

@@ -9,4 +9,5 @@ export interface ProfileModel {
   gender: GenderEnum;
   province_id: string;
   country_id: string;
+  online_status: boolean;
 }

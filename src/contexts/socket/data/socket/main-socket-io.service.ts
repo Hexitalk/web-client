@@ -9,6 +9,10 @@ import { MainSocketService } from '../../domain/socket/main-socket.service';
 export class MainSocketIoService extends MainSocketService {
   constructor(private socket: Socket) {
     super();
+    this.socket.fromEvent('test3').subscribe((t) => console.log(t));
+    this.socket
+      .fromEvent('profiles-profile-info')
+      .subscribe((t) => console.log(t));
   }
 
   disconnect(): void {
@@ -33,5 +37,15 @@ export class MainSocketIoService extends MainSocketService {
 
   onError(): Observable<any> {
     return this.socket.fromEvent('connect_error');
+  }
+
+  updateToken(token: string): void {
+    this.socket.disconnect();
+
+    this.socket.ioSocket.io.opts.extraHeaders = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    this.socket.connect();
   }
 }

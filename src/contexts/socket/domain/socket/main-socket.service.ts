@@ -7,4 +7,5 @@ export abstract class MainSocketService {
   abstract onConnect(): Observable<any>;
   abstract onError(): Observable<any>;
   abstract onDisconnect(): Observable<any>;
+  abstract updateToken(token: string): void;
 }

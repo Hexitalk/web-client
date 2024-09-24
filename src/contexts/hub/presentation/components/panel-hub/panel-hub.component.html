@@ -1,4 +1,53 @@
-<img class="hexagon-back" src="/images/hexagon_center1.webp" />
+@if( hub() ){ @if( hub()!.hub_chats){ @for(item of hub()!.hub_chats; track
+item.id){
+<app-panel-hub-item [hub-chat]="item"></app-panel-hub-item>
+} } }
+
+<!-- <div class="hub-chat-item hover-poly-1">
+  <div class="hub-chat-container">
+    <div class="profile-image"><img src="/images/profile_test_1.PNG" /></div>
+    <div class="profile-name">Sagisith</div>
+  </div>
+</div>
+<div class="hub-chat-item hover-poly-2">
+  <div class="hub-chat-container">
+    <div class="profile-image"><img src="/images/profile_test_2.PNG" /></div>
+    <div class="profile-name">Nymphetamine</div>
+  </div>
+</div>
+<div class="hub-chat-item hover-poly-3">
+  <div class="hub-chat-container">
+    <div class="profile-image"><img src="/images/profile_test_3.PNG" /></div>
+    <div class="profile-name">Nora Nala</div>
+  </div>
+</div>
+<div class="hub-chat-item hover-poly-4">
+  <div class="hub-chat-container">
+    <div class="profile-image"><img src="/images/profile_test_4.PNG" /></div>
+    <div class="profile-name">Kittykitt</div>
+  </div>
+</div>
+<div class="hub-chat-item hover-poly-5">
+  <div class="hub-chat-container">
+    <div class="profile-image"><img src="/images/profile_test_5.PNG" /></div>
+    <div class="profile-name">Ford mustnag</div>
+  </div>
+</div>
+<div class="hub-chat-item hover-poly-6">
+  <div class="hub-chat-container">
+    <div class="profile-image"><img src="/images/profile_test_6.PNG" /></div>
+    <div class="profile-name">Soy pobre man</div>
+  </div>
+</div>
+
+<div class="center-hexagon">
+  <div class="hub-chat-container">
+    <div class="profile-image"><img src="/images/perfil_test.PNG" /></div>
+    <div class="profile-name">Preferences</div>
+  </div>
+</div> -->
+
+<!-- <img class="hexagon-back" src="/images/hexagon_center1.webp" />
 
 <div class="hub-chat-item hover-poly-1">
   <div class="profile-image"><img src="/images/profile_test_1.PNG" /></div>
@@ -28,4 +77,4 @@
 <div class="center-hexagon">
   <div class="profile-image"><img src="/images/perfil_test.PNG" /></div>
   <div class="profile-name">Preferences</div>
-</div>
+</div> -->

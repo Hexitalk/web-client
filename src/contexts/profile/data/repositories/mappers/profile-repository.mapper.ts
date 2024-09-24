@@ -16,6 +16,7 @@ export class ProfileImplementationRepositoryMapper extends Mapper<
       gender: param.gender,
       province_id: param.province_id,
       country_id: param.country_id,
+      online_status: param.online_status ?? false,
     };
   }
   mapTo(param: ProfileModel): ProfileEntity {
@@ -28,6 +29,7 @@ export class ProfileImplementationRepositoryMapper extends Mapper<
       gender: param.gender,
       province_id: param.province_id,
       country_id: param.country_id,
+      online_status: param.online_status ?? false,
     };
   }
 }
