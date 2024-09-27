@@ -28,6 +28,27 @@
   </div>
   } @case (StateEnum.REQUEST) {
   <div class="state-open">
+    <p-buttonGroup>
+      <p-button
+        label="Accept"
+        icon="pi pi-times"
+        severity="success"
+        (onClick)="accetpHubChatRequest()"
+      />
+      <p-button
+        label="Cancel"
+        icon="pi pi-times"
+        severity="danger"
+        (onClick)="stopHubChatSearch()"
+      />
+    </p-buttonGroup>
+
+    <div class="search-chat-loading">
+      <span>Request</span>
+    </div>
+  </div>
+  } @case (StateEnum.ACCEPTED) {
+  <div class="state-open">
     <p-button
       label="Cancel"
       icon="pi pi-times"
@@ -36,7 +57,7 @@
     />
 
     <div class="search-chat-loading">
-      <span>Request</span>
+      <span>Accepted</span>
     </div>
   </div>
   } @case (StateEnum.CONNECTED) { @if(hubChat.target_profile){
