@@ -1,16 +1,6 @@
 @if(hubChat){
 <div class="hub-item-container">
-  @if(hubChat.target_profile){
-  <div
-    class="profile-image"
-    [ngClass]="{ online: hubChat.target_profile.online_status }"
-  >
-    <img src="/images/profile_test_5.PNG" />
-  </div>
-  <!-- <p-button icon="pi pi-comment" [rounded]="true" severity="success" /> -->
-
-  <div class="profile-name">{{ hubChat.target_profile.nick }}</div>
-  } @else{ @switch (hubChat.state) { @case (StateEnum.CLOSE) {
+  @switch (hubChat.state) { @case (StateEnum.CLOSE) {
   <p-button
     label="Find chat"
     icon="pi pi-comment"
@@ -36,7 +26,29 @@
       <span>Searching...</span>
     </div>
   </div>
-  } @case (StateEnum.CLOSE) { } @case (StateEnum.CLOSE) { } @case
-  (StateEnum.CLOSE) { } } }
+  } @case (StateEnum.REQUEST) {
+  <div class="state-open">
+    <p-button
+      label="Cancel"
+      icon="pi pi-times"
+      severity="danger"
+      (onClick)="stopHubChatSearch()"
+    />
+
+    <div class="search-chat-loading">
+      <span>Request</span>
+    </div>
+  </div>
+  } @case (StateEnum.CONNECTED) { @if(hubChat.target_profile){
+  <div
+    class="profile-image"
+    [ngClass]="{ online: hubChat.target_profile.online_status }"
+  >
+    <img src="/images/profile_test_5.PNG" />
+  </div>
+  <!-- <p-button icon="pi pi-comment" [rounded]="true" severity="success" /> -->
+
+  <div class="profile-name">{{ hubChat.target_profile.nick }}</div>
+  } } @case (StateEnum.CLOSE) { } }
 </div>
 }

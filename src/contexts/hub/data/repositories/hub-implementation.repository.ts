@@ -25,10 +25,10 @@ export class HubImplementationRepository extends HubRepository {
 
   getHub(): Observable<HubModel> {
     return this.http
-      .post<HubEntity>(`${environment.apiUrl}/hub/get-hub`, {})
+      .post<{ hub: HubEntity }>(`${environment.apiUrl}/hub/get-hub`, {})
       .pipe(
         map((res) => {
-          return this.hubMapper.mapFrom(res);
+          return this.hubMapper.mapFrom(res.hub);
         })
       );
   }
