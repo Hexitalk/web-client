@@ -75,4 +75,6 @@ export class PanelHubItemComponent implements OnInit {
         });
     }
   }
+
+  initChat() {}
 }

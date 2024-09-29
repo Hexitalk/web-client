@@ -67,6 +67,12 @@
   >
     <img src="/images/profile_test_5.PNG" />
   </div>
+  <p-button
+    label="Chat"
+    icon="pi pi-times"
+    severity="success"
+    (onClick)="initChat()"
+  />
   <!-- <p-button icon="pi pi-comment" [rounded]="true" severity="success" /> -->
 
   <div class="profile-name">{{ hubChat.target_profile.nick }}</div>
