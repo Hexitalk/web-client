@@ -1,1 +1,8 @@
-<app-panel-hub />
+<div class="panel-hub">
+  <app-panel-hub (onTargetProfileIdChat)="setChatTargetProfileId($event)" />
+</div>
+<div class="chat">
+  @if(targetProfileId()){
+  <app-chat [targetProfileId]="targetProfileId()!" />
+  }
+</div>

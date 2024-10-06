@@ -1,0 +1,21 @@
+:host {
+  display: flex;
+  width: 100%;
+  background-color: #a78bfa;
+  align-items: center;
+  padding: 0 1rem;
+  column-gap: 1rem;
+  height: 3.4rem;
+  color: #000;
+}
+
+.profile-image {
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 100%;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+  }
+}

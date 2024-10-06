@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnInit,
+  output,
   signal,
   WritableSignal,
 } from '@angular/core';
@@ -21,6 +22,8 @@ import { merge } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PanelHubComponent implements OnInit {
+  public onTargetProfileIdChat = output<string | undefined>();
+
   hub: WritableSignal<HubModel | undefined> = signal<HubModel | undefined>(
     undefined
   );
@@ -29,6 +32,10 @@ export class PanelHubComponent implements OnInit {
     private listenHubUpdateUseCase: ListenHubUpdateUseCase,
     private getHubUseCase: GetHubUseCase
   ) {}
+
+  initChat(targetProfileId: string | undefined) {
+    this.onTargetProfileIdChat.emit(targetProfileId);
+  }
 
   ngOnInit(): void {
     merge(

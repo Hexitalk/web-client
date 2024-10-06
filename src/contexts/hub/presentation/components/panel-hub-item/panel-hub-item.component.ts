@@ -4,6 +4,7 @@ import {
   HostBinding,
   Input,
   OnInit,
+  output,
 } from '@angular/core';
 import { HubChatModel } from '../../../domain/models/hub-chat.model';
 import { CommonModule } from '@angular/common';
@@ -35,12 +36,14 @@ export class PanelHubItemComponent implements OnInit {
     return this.hubChat ? `slot-${this.hubChat.slot}` : '';
   }
 
+  public onTargetProfileIdChat = output<string | undefined>();
+
   StateEnum = HubChatStateEnum;
 
   constructor(private setHubChatStateUseCase: SetHubChatStateUseCase) {}
 
   ngOnInit(): void {
-    console.log(this.hubChat);
+    // console.log(this.hubChat);
   }
 
   startHubChatSearch() {
@@ -76,5 +79,7 @@ export class PanelHubItemComponent implements OnInit {
     }
   }
 
-  initChat() {}
+  initChat(targetProfileId: string) {
+    this.onTargetProfileIdChat.emit(targetProfileId);
+  }
 }

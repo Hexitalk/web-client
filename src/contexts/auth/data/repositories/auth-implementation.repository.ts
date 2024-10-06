@@ -38,6 +38,7 @@ export class AuthImplementationRepository extends AuthRepository {
 
   // private tokenSubject = new BehaviorSubject<string>(this.loadToken());
   private tokenSubject = new ReplaySubject<string>();
+  private idSubject = new ReplaySubject<string>();
 
   constructor(private http: HttpClient) {
     super();
@@ -58,6 +59,11 @@ export class AuthImplementationRepository extends AuthRepository {
             user: this.userMapper.mapFrom(res.user),
             profile: this.profileMapper.mapFrom(res.profile),
           };
+        }),
+        tap((res) => {
+          if (res.user) {
+            this.setAuthId(res.user.id);
+          }
         })
       );
   }
@@ -76,6 +82,11 @@ export class AuthImplementationRepository extends AuthRepository {
             user: this.userMapper.mapFrom(res.user),
             profile: this.profileMapper.mapFrom(res.profile),
           };
+        }),
+        tap((res) => {
+          if (res.user) {
+            this.setAuthId(res.user.id);
+          }
         }),
         catchError((err) => {
           console.log('error!!!!¿¿¿¿');
@@ -99,5 +110,18 @@ export class AuthImplementationRepository extends AuthRepository {
   setAuthToken(token: string): void {
     localStorage.setItem('hexitalk_auth_token', token);
     this.tokenSubject.next(token);
+  }
+
+  getAuthId(): string {
+    return localStorage.getItem('hexitalk_auth_id') || '';
+  }
+
+  listenAuthId(): Observable<string> {
+    return this.idSubject.asObservable();
+  }
+
+  setAuthId(id: string): void {
+    localStorage.setItem('hexitalk_auth_id', id);
+    this.idSubject.next(id);
   }
 }

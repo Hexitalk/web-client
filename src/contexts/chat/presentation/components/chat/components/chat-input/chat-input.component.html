@@ -1,0 +1,15 @@
+<div class="chat-input">
+  <input
+    type="text"
+    pInputText
+    variant="filled"
+    placeholder="Write a message..."
+    [(ngModel)]="inputText"
+    name="chat_input_text"
+    (keyup.enter)="sendInputText()"
+    autocomplete="off"
+  />
+</div>
+<div class="chat-input-send">
+  <p-button icon="pi pi-send" (onClick)="sendInputText()" />
+</div>

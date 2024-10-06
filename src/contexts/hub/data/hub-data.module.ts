@@ -8,6 +8,7 @@ import { ListenHubUpdateUseCase } from '../use-cases/listen-hub-update.usecase';
 import { HubSocketIoService } from './socket/hub-socket-io.service';
 import { GetHubUseCase } from '../use-cases/get-hub.usecase';
 import { SetHubChatStateUseCase } from '../use-cases/set-hub-chat-state.usecase';
+import { ChatDataModule } from '../../chat/data/chat-data.module';
 
 const getHubUseCaseFactory = (hubRepo: HubRepository) =>
   new GetHubUseCase(hubRepo);

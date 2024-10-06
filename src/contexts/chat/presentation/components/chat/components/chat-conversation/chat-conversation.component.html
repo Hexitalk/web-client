@@ -1,0 +1,11 @@
+<p-scrollPanel
+  #scrollPanel
+  [style]="{ width: '100%', height: '200px' }"
+  styleClass="custombar2"
+>
+  @for (chatLine of listChatLines(); track chatLine.id) {
+  <app-chat-line [chatLineItem]="chatLine" />
+  } @empty {
+  <p>NOT MESSAGES</p>
+  }
+</p-scrollPanel>

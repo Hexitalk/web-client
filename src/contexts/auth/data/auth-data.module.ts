@@ -17,6 +17,9 @@ import { ListenAuthTokenUseCase } from '../use-cases/listen-auth-token.usecase';
 import { AuthLogoutUseCase } from '../use-cases/auth-logout.usecase';
 import { AuthSocketLogoutUseCase } from '../use-cases/auth-socket-logout.usecase';
 import { SocketDataModule } from '../../socket/data/socket-data.module';
+import { GetAuthIdUseCase } from '../use-cases/get-auth-id.usecase';
+import { ListenAuthIdUseCase } from '../use-cases/listen-auth-id.usecase';
+import { SetAuthIdUseCase } from '../use-cases/set-auth-id.usecase';
 
 const authLoginUseCaseFactory = (
   authRepo: AuthRepository,
@@ -64,6 +67,30 @@ export const setAuthTokenUseCaseProvider = {
   deps: [AuthRepository],
 };
 
+const getAuthIdUseCaseFactory = (authRepo: AuthRepository) =>
+  new GetAuthIdUseCase(authRepo);
+export const getAuthIdUseCaseProvider = {
+  provide: GetAuthIdUseCase,
+  useFactory: getAuthIdUseCaseFactory,
+  deps: [AuthRepository],
+};
+
+const listenAuthIdUseCaseFactory = (authRepo: AuthRepository) =>
+  new ListenAuthIdUseCase(authRepo);
+export const listenAuthIdUseCaseProvider = {
+  provide: ListenAuthIdUseCase,
+  useFactory: listenAuthIdUseCaseFactory,
+  deps: [AuthRepository],
+};
+
+const setAuthIdUseCaseFactory = (authRepo: AuthRepository) =>
+  new SetAuthIdUseCase(authRepo);
+export const setAuthIdUseCaseProvider = {
+  provide: SetAuthIdUseCase,
+  useFactory: setAuthIdUseCaseFactory,
+  deps: [AuthRepository],
+};
+
 const authLogoutUseCaseFactory = (
   authRepo: AuthRepository,
   userRepo: UserRepository,
@@ -105,6 +132,9 @@ export const authSocketLogoutUseCaseProvider = {
     getAuthTokenUseCaseProvider,
     setAuthTokenUseCaseProvider,
     listenAuthTokenUseCaseProvider,
+    getAuthIdUseCaseProvider,
+    setAuthIdUseCaseProvider,
+    listenAuthIdUseCaseProvider,
     authLogoutUseCaseProvider,
     authSocketLoginUseCaseProvider,
     authSocketLogoutUseCaseProvider,

@@ -1,6 +1,9 @@
 @if( hub() ){ @if( hub()!.hub_chats){ @for(item of hub()!.hub_chats; track
 item.id){
-<app-panel-hub-item [hub-chat]="item"></app-panel-hub-item>
+<app-panel-hub-item
+  [hub-chat]="item"
+  (onTargetProfileIdChat)="initChat($event)"
+></app-panel-hub-item>
 } } }
 
 <!-- <div class="hub-chat-item hover-poly-1">

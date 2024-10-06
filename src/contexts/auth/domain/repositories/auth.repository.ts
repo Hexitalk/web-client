@@ -19,4 +19,7 @@ export abstract class AuthRepository {
   abstract getAuthToken(): string;
   abstract listenAuthToken(): Observable<string>;
   abstract setAuthToken(token: string): void;
+  abstract getAuthId(): string;
+  abstract listenAuthId(): Observable<string>;
+  abstract setAuthId(token: string): void;
 }

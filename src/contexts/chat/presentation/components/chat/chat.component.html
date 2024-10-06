@@ -1,0 +1,5 @@
+@if(chat()){ @if(targetProfile()){
+<app-chat-header [profile]="targetProfile()!" />
+}
+<app-chat-body [chat]="chat()!" />
+}
