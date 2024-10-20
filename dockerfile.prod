@@ -1,38 +1,38 @@
-# Stage 1: Build the Angular application
-FROM node:lts-alpine3.20 as build
+# Stage 1: Build the Angular app
+FROM node:latest AS build
 
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy npm configuration files and package.json
+# Copy package files to install dependencies
 COPY package*.json ./
 
-# Install application dependencies
-RUN npm ci --silent
+# Run a clean install of the dependencies
+RUN npm install
 
-# Install Angular CLI if it's not installed globally
+# Install Angular CLI globally
 RUN npm install -g @angular/cli
 
-# Copy the rest of the application files into the container
+# Copy the rest of the application files
 COPY . .
 
-# Build the Angular application for production
-RUN ng build --configuration production
+# Build the Angular app in production mode
+RUN npm run build --configuration=production
 
-# Stage 2: Serve the application with NGINX
-FROM nginx:alpine as prod
+# Stage 2: Serve the Angular app using NGINX
+FROM nginx:latest
 
-# Copy the built files from the build stage to NGINX's html directory
-COPY --from=build /app/dist/your-angular-app /usr/share/nginx/html
+# Copy the build output to replace the default nginx
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
-# Remove the default NGINX configuration
-# RUN rm /etc/nginx/conf.d/default.conf
+# Copy the built Angular files from the build stage to the NGINX html directory
+COPY --from=build /app/dist/hexitalk-web-client/browser /usr/share/nginx/html
 
-# Copy your custom NGINX configuration (if applicable)
-# COPY nginx.conf /etc/nginx/conf.d
+# Copy a custom NGINX configuration file, if needed (optional)
+# COPY nginx.conf /etc/nginx/nginx.conf
 
-# Expose the port NGINX will serve on
+# Expose port 80 to serve the application
 EXPOSE 80
 
-# Default command to run NGINX
-CMD ["nginx", "-g", "daemon off;"]
+# Start NGINX in the foreground
+# CMD ["nginx", "-g", "daemon off;"]
