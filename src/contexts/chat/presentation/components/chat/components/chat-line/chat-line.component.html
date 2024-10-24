@@ -1,1 +1,15 @@
-<p>{{ chatLineItem().text }}</p>
+@if(chatLineItem().isLastGroupItem){
+<div class="image-profile">
+  <img src="/images/profile_test_5.PNG" />
+</div>
+}
+
+<p
+  class="chat-line"
+  [ngClass]="{
+    'is-auth': chatLineItem().isAuthUser,
+    'is-last': chatLineItem().isLastGroupItem
+  }"
+>
+  {{ chatLineItem().text }}
+</p>

@@ -12,6 +12,7 @@ import { ChatLineModel } from '../../../../../domain/models/chat-line.model';
 import { AuthDataModule } from '../../../../../../auth/data/auth-data.module';
 import { GetAuthIdUseCase } from '../../../../../../auth/use-cases/get-auth-id.usecase';
 import { ChatLineComponent } from '../chat-line/chat-line.component';
+import { ChatModel } from '../../../../../domain/models/chat.model';
 
 interface ChatLineItem extends ChatLineModel {
   isAuthUser: boolean;
@@ -27,7 +28,7 @@ interface ChatLineItem extends ChatLineModel {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatConversationComponent {
-  chatLines = input.required<ChatLineModel[]>();
+  chat = input.required<ChatModel>();
 
   authUserId: string = '';
 
@@ -40,7 +41,7 @@ export class ChatConversationComponent {
       () => {
         this.authUserId = this.getAuthIdUseCase.execute();
         this.clearList();
-        this.addChatLines(this.chatLines());
+        this.addChatLines(this.chat().chat_lines);
       },
       { allowSignalWrites: true }
     );
@@ -51,12 +52,16 @@ export class ChatConversationComponent {
   }
 
   private addChatLines(chatLines: ChatLineModel[]) {
-    const newListItems: ChatLineItem[] = chatLines.map((cl) => {
+    const newListItems: ChatLineItem[] = chatLines.map((cl, index, arr) => {
+      cl.profile = this.chat()
+        .chats_profiles.map((cp) => cp.profile)
+        .find((p) => p && p.id == cl.profile_id);
       return {
         ...cl,
         isAuthUser:
           (cl.profile && cl.profile.user_id == this.authUserId) || false,
-        isLastGroupItem: false, // TODO: make the logic
+        isLastGroupItem:
+          !arr[index + 1] || arr[index + 1].profile_id != cl.profile_id,
       };
     });
 
@@ -72,7 +77,10 @@ export class ChatConversationComponent {
   scrollToBottom() {
     if (this.scrollPanel && this.scrollPanel.contentViewChild) {
       const scrollableContent = this.scrollPanel.contentViewChild.nativeElement;
-      scrollableContent.scrollTop = scrollableContent.scrollHeight;
+      scrollableContent.scrollTo({
+        top: scrollableContent.scrollHeight,
+        behavior: 'smooth',
+      });
     }
   }
 }

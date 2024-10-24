@@ -77,8 +77,6 @@ export class ChatComponent {
         filter((res) => res.chat_id == this.chat()?.id)
       )
       .subscribe((res) => {
-        // console.log('si entra');
-
         if (this.chat()) {
           this.chat.update((prev) => {
             if (prev) {
