@@ -1,11 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { GetAuthTokenUseCase } from '../contexts/auth/use-cases/get-auth-token.usecase';
-import { firstValueFrom, merge, Subject, switchMap, takeUntil } from 'rxjs';
-import {
-  AuthDataModule,
-  setAuthTokenUseCaseProvider,
-} from '../contexts/auth/data/auth-data.module';
+import { merge, Subject, takeUntil } from 'rxjs';
+import { AuthDataModule } from '../contexts/auth/data/auth-data.module';
 import { TranslocoModule } from '@ngneat/transloco';
 import { PrimeNGConfig } from 'primeng/api';
 import { SocketDataModule } from '../contexts/socket/data/socket-data.module';
@@ -13,7 +10,6 @@ import { ListenReconnectSocketUseCase } from '../contexts/socket/use-cases/liste
 import { ListenConnectSocketUseCase } from '../contexts/socket/use-cases/listen-connect-socket.usecase';
 import { AuthSocketLoginUseCase } from '../contexts/auth/use-cases/auth-socket-login.usecase';
 import { ListenDisconnectSocketUseCase } from '../contexts/socket/use-cases/listen-disconnect-socket.usecase';
-import { SetAuthTokenUseCase } from '../contexts/auth/use-cases/set-auth-token.usecase';
 
 @Component({
   selector: 'app-root',
@@ -32,8 +28,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private listenReconnectSocketUseCase: ListenReconnectSocketUseCase,
     private listenConnectSocketUseCase: ListenConnectSocketUseCase,
     private listenDisconnectSocketUseCase: ListenDisconnectSocketUseCase,
-    private authSocketLoginUseCase: AuthSocketLoginUseCase,
-    private setAuthTokenUseCase: SetAuthTokenUseCase
+    private authSocketLoginUseCase: AuthSocketLoginUseCase
   ) {}
 
   ngOnInit() {
