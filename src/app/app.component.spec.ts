@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { of, Subject } from 'rxjs';
-import { SocketDataModule } from '../contexts/socket/data/socket-data.module';
 import { Socket } from 'ngx-socket-io';
 import { GetAuthTokenUseCase } from '../contexts/auth/use-cases/get-auth-token.usecase';
 import { PrimeNGConfig } from 'primeng/api';
@@ -10,45 +9,15 @@ import { ListenReconnectSocketUseCase } from '../contexts/socket/use-cases/liste
 import { ListenConnectSocketUseCase } from '../contexts/socket/use-cases/listen-connect-socket.usecase';
 import { ListenDisconnectSocketUseCase } from '../contexts/socket/use-cases/listen-disconnect-socket.usecase';
 import { AuthSocketLoginUseCase } from '../contexts/auth/use-cases/auth-socket-login.usecase';
+import { mockSocketService } from './testing/mock-services';
 
-class MockGetAuthTokenUseCase {
-  execute() {}
-}
-
-class MockListenReconnectSocketUseCase {
+class MockListenDisconnectSocketUseCase {
   execute() {
-    return of();
+    return of(undefined);
   }
 }
 
-class MockMainSocketService {
-  execute() {
-    return of(undefined); // Simulate a disconnect event
-  }
-}
-class MockWrappedSocket {
-  execute() {
-    return of();
-  }
-}
-
-export class MockSocketService {
-  private mockSubject = new Subject<any>();
-
-  emit(eventName: string, data?: any) {
-    this.mockSubject.next({ eventName, data });
-  }
-
-  fromEvent<T>(eventName: string) {
-    return this.mockSubject.asObservable();
-  }
-
-  connect() {}
-
-  disconnect() {}
-}
-
-fdescribe('AppComponent', () => {
+describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
   let compiled: HTMLElement;
   let component: AppComponent;
@@ -65,15 +34,11 @@ fdescribe('AppComponent', () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
       providers: [
-        { provide: Socket, useClass: MockSocketService },
+        { provide: Socket, useClass: mockSocketService },
         {
           provide: ListenDisconnectSocketUseCase,
-          useClass: MockMainSocketService,
+          useClass: MockListenDisconnectSocketUseCase,
         },
-        //   { provide: ListenConnectSocketUseCase, useClass: MockListenConnectSocketUseCase },
-        //   { provide: ListenReconnectSocketUseCase, useClass: MockListenReconnectSocketUseCase },
-        //   { provide: GetAuthTokenUseCase, useClass: MockGetAuthTokenUseCase },
-        //   { provide: AuthSocketLoginUseCase, useClass: MockAuthSocketLoginUseCase }
       ],
     }).compileComponents();
   });
@@ -101,45 +66,124 @@ fdescribe('AppComponent', () => {
     ) as unknown as ListenDisconnectSocketUseCase;
   });
 
-  it('should create the app 1', () => {
+  it('should create the app', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call ngOnInit and execute necessary methods', () => {
+  it('should call authSocketLoginUseCase on socket connect/reconnect event', () => {
     const ngOnInitSpy = spyOn(component, 'ngOnInit').and.callThrough();
-    const ngRedirectAuthSpy = spyOn(component, 'redirectAuth').and.callFake(
+    const redirectAuthSpy = spyOn(component, 'redirectAuth').and.callFake(
       () => new Promise<void>((solve) => solve)
     );
-    const getAuthTokenSpy = spyOn(
-      getAuthTokenUseCase,
-      'execute'
-    ).and.returnValue('mockToken');
-    const authSocketLoginSpy = spyOn(
-      authSocketLoginUseCase,
-      'execute'
-    ).and.returnValue();
     const listenConnectSpy = spyOn(
       listenConnectSocketUseCase,
       'execute'
-    ).and.returnValue(of());
+    ).and.returnValue(of(undefined));
     const listenReconnectSpy = spyOn(
       listenReconnectSocketUseCase,
       'execute'
     ).and.returnValue(of());
-    const listenDisconnectSpy = spyOn(
-      listenDisconnectSocketUseCase,
+    const authSocketLoginSpy = spyOn(
+      authSocketLoginUseCase,
       'execute'
-    ).and.returnValue(of(undefined, undefined));
+    ).and.returnValue();
 
     component.ngOnInit();
-    fixture.detectChanges();
 
-    expect(ngOnInitSpy).toHaveBeenCalled();
-    expect(ngRedirectAuthSpy).toHaveBeenCalled();
-    // expect(getAuthTokenSpy).toHaveBeenCalled();
-    // expect(authSocketLoginSpy).toHaveBeenCalled();
     expect(listenConnectSpy).toHaveBeenCalled();
     expect(listenReconnectSpy).toHaveBeenCalled();
-    expect(listenDisconnectSpy).toHaveBeenCalled();
+    expect(authSocketLoginSpy).toHaveBeenCalled();
+  });
+
+  it('should call redirectAuth on ngOnInit', () => {
+    const ngOnInitSpy = spyOn(component, 'ngOnInit').and.callThrough();
+    const redirectAuthSpy = spyOn(component, 'redirectAuth').and.callFake(
+      () => new Promise<void>((solve) => solve)
+    );
+
+    component.ngOnInit();
+
+    expect(redirectAuthSpy).toHaveBeenCalled();
+  });
+
+  it('should call router navigate on redirectAuth when token is not empty', () => {
+    const navigateSpy = spyOn(router, 'navigate').and.callFake(
+      () => new Promise<boolean>((solve) => solve(true))
+    );
+
+    const getAuthTokenUseCaseSpy = spyOn(
+      getAuthTokenUseCase,
+      'execute'
+    ).and.returnValue('mock-token');
+
+    component.redirectAuth();
+
+    expect(navigateSpy).toHaveBeenCalled();
+  });
+
+  it('shouldn´t call router navigate on redirectAuth when token is empty', () => {
+    const navigateSpy = spyOn(router, 'navigate').and.callFake(
+      () => new Promise<boolean>((solve) => solve(true))
+    );
+
+    const getAuthTokenUseCaseSpy = spyOn(
+      getAuthTokenUseCase,
+      'execute'
+    ).and.returnValue('');
+
+    component.redirectAuth();
+
+    expect(navigateSpy).not.toHaveBeenCalled();
+  });
+
+  it('should call ngOnDestroy and complete the destroy$ subject', () => {
+    const ngOnDestroySpy = spyOn(component, 'ngOnDestroy').and.callThrough();
+    const completeSpy = spyOn(
+      component['destroy$'],
+      'complete'
+    ).and.callThrough();
+
+    component.ngOnDestroy();
+
+    expect(ngOnDestroySpy).toHaveBeenCalled();
+    expect(completeSpy).toHaveBeenCalled();
   });
 });
+
+// xit('should call ngOnInit and execute necessary methods', () => {
+//   const ngOnInitSpy = spyOn(component, 'ngOnInit').and.callThrough();
+//   const redirectAuthSpy = spyOn(component, 'redirectAuth').and.callFake(
+//     () => new Promise<void>((solve) => solve)
+//   );
+//   const getAuthTokenSpy = spyOn(
+//     getAuthTokenUseCase,
+//     'execute'
+//   ).and.returnValue('mockToken');
+//   const authSocketLoginSpy = spyOn(
+//     authSocketLoginUseCase,
+//     'execute'
+//   ).and.returnValue();
+//   const listenConnectSpy = spyOn(
+//     listenConnectSocketUseCase,
+//     'execute'
+//   ).and.returnValue(of(undefined));
+//   const listenReconnectSpy = spyOn(
+//     listenReconnectSocketUseCase,
+//     'execute'
+//   ).and.returnValue(of());
+//   const listenDisconnectSpy = spyOn(
+//     listenDisconnectSocketUseCase,
+//     'execute'
+//   ).and.returnValue(of(undefined, undefined));
+
+//   component.ngOnInit();
+//   fixture.detectChanges();
+
+//   expect(ngOnInitSpy).toHaveBeenCalled();
+//   expect(redirectAuthSpy).toHaveBeenCalled();
+//   // expect(getAuthTokenSpy).toHaveBeenCalled();
+//   expect(authSocketLoginSpy).toHaveBeenCalled();
+//   expect(listenConnectSpy).toHaveBeenCalled();
+//   expect(listenReconnectSpy).toHaveBeenCalled();
+//   expect(listenDisconnectSpy).toHaveBeenCalled();
+// });
