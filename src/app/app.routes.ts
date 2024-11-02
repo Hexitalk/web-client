@@ -1,12 +1,17 @@
 import { Routes } from '@angular/router';
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { authLazyGuard } from '../contexts/shared/guards/auth-lazy.guard';
+import { PageAboutComponent } from './pages/page-about/page-about.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: LandingPageComponent,
+  },
+  {
+    path: 'about',
+    component: PageAboutComponent,
   },
   {
     path: 'auth',

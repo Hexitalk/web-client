@@ -2,12 +2,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TranslocoModule } from '@ngneat/transloco';
 import { TranslateSelectComponent } from '../../components/translate-select/translate-select.component';
-import { A11yModule, LiveAnnouncer } from '@angular/cdk/a11y';
+import { A11yModule } from '@angular/cdk/a11y';
 import { Button } from 'primeng/button';
 import { MenubarModule } from 'primeng/menubar';
 
 @Component({
-  selector: 'app-landing-page',
+  selector: 'app-page-about',
   standalone: true,
   imports: [
     RouterModule,
@@ -17,19 +17,8 @@ import { MenubarModule } from 'primeng/menubar';
     Button,
     MenubarModule,
   ],
-  providers: [LiveAnnouncer],
-  templateUrl: './landing-page.component.html',
-  styleUrl: './landing-page.component.scss',
+  templateUrl: './page-about.component.html',
+  styleUrl: './page-about.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {
-    role: 'main',
-    'aria-label': 'Landing page',
-  },
 })
-export class LandingPageComponent {
-  constructor(private liveAnnouncer: LiveAnnouncer) {}
-
-  announceMessage() {
-    this.liveAnnouncer.announce('Contenido actualizado.');
-  }
-}
+export class PageAboutComponent {}

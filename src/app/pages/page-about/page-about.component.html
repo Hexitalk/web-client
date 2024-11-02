@@ -40,34 +40,23 @@
   >
     <div class="main-content">
       <h1 id="app-title-description">
-        {{ "app.landing-page.text.title-meet-new-people" | transloco }}
+        {{ "app.about-page.text.about-app-title" | transloco }}
       </h1>
       <p>
-        {{
-          "app.landing-page.text.description-meet-new-people-first" | transloco
-        }}
+        {{ "app.about-page.text.about-app-desc" | transloco }}
       </p>
       <p>
-        {{
-          "app.landing-page.text.description-meet-new-people-second" | transloco
-        }}
+        {{ "app.about-page.text.about-app-sub-desc" | transloco }}
       </p>
-      <div class="buttons-auth">
-        <p-button [rounded]="true" [routerLink]="['/auth/sign-up']">
-          {{ "app.landing-page.text.create-account" | transloco }}
-        </p-button>
-
-        <p-button
-          [rounded]="true"
-          [outlined]="true"
-          [routerLink]="['/auth/login']"
-        >
-          {{ "app.landing-page.text.sign-in" | transloco }}
-        </p-button>
-      </div>
+      <h1 id="app-title-description">
+        {{ "app.about-page.text.about-open-source-title" | transloco }}
+      </h1>
+      <p>
+        {{ "app.about-page.text.about-open-source-desc" | transloco }}
+      </p>
+      <p>
+        {{ "app.about-page.text.about-open-source-sub-desc" | transloco }}
+      </p>
     </div>
-  </section>
-  <section class="section-deco-image">
-    <img src="/images/landing_image_2.webp" alt="" />
   </section>
 </main>

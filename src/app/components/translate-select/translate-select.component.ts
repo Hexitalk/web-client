@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { MenuItem } from 'primeng/api';
 import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-translate-select',
   standalone: true,
-  imports: [DropdownModule, FormsModule],
+  imports: [DropdownModule, FormsModule, TranslocoModule],
   templateUrl: './translate-select.component.html',
   styleUrl: './translate-select.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -16,14 +16,16 @@ export class TranslateSelectComponent implements OnInit {
   languages: MenuItem[] | undefined;
   selectedLanguage: string = 'en';
 
-  constructor(private translocoService: TranslocoService) {}
-
-  ngOnInit() {
+  constructor(private translocoService: TranslocoService) {
     this.languages = [
-      { name: 'François', code: 'fr' },
       { name: 'Español', code: 'es' },
+      { name: 'François', code: 'fr' },
       { name: 'English', code: 'en' },
     ];
+  }
+
+  ngOnInit() {
+    this.translocoService.setActiveLang(this.selectedLanguage);
   }
 
   /*ngOnChanges(changes: SimpleChanges): void {
@@ -37,7 +39,6 @@ export class TranslateSelectComponent implements OnInit {
   }*/
 
   selectChange(event: DropdownChangeEvent) {
-    console.log(event.value);
     this.setLang(event.value);
   }
 

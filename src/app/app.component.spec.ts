@@ -9,7 +9,7 @@ import { ListenReconnectSocketUseCase } from '../contexts/socket/use-cases/liste
 import { ListenConnectSocketUseCase } from '../contexts/socket/use-cases/listen-connect-socket.usecase';
 import { ListenDisconnectSocketUseCase } from '../contexts/socket/use-cases/listen-disconnect-socket.usecase';
 import { AuthSocketLoginUseCase } from '../contexts/auth/use-cases/auth-socket-login.usecase';
-import { mockSocketService } from './testing/mock-services';
+import { mockSocketService } from '../testing/mock-services';
 
 class MockListenDisconnectSocketUseCase {
   execute() {

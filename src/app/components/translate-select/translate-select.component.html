@@ -6,10 +6,12 @@
 <div>
   <p-dropdown
     [options]="languages"
+    [ngModel]="selectedLanguage"
     optionLabel="name"
     optionValue="code"
-    placeholder="Select language"
+    [placeholder]="'app.landing-page.text.select-language' | transloco"
     name="language-select"
     (onChange)="selectChange($event)"
+    [ariaLabel]="'app.landing-page.text.select-language' | transloco"
   />
 </div>

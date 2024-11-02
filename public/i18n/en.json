@@ -5,10 +5,30 @@
   "friend": {},
   "app": {
     "landing-page": {
-      "subtitle-meet-new-people": "Meet new people, make new friends",
-      "create-account": "Create account",
-      "already-account": "Already have an accout?",
-      "sign-in": "Sign in"
+      "text": {
+        "create-account": "Create account",
+        "already-account": "Already have an accout?",
+        "sign-in": "Sign in",
+        "select-language": "Select language",
+        "title-meet-new-people": "Make new friends by chatting",
+        "description-meet-new-people-first": "Connect and chat with new people in a friendly environment that helps you build connections through shared activities.",
+        "description-meet-new-people-second": "These experiences make it easy to discover everyone’s tastes and personalities, leading to interesting conversations and genuine, lasting friendships."
+      },
+      "aria": {
+        "nav-menu": "Navigation menu",
+        "nav-to-home": "Go to home page"
+      }
+    },
+    "about-page": {
+      "text": {
+        "about-app-title": "About the application",
+        "about-app-desc": "Hexitalk is an application for meeting people through chat, designed to facilitate connections and create a space where people can communicate safely and enjoyably. It offers an intuitive platform where users can interact in real-time, make new friends, and enjoy interesting conversations.",
+        "about-app-sub-desc": "The application provides optimized chat features and customizable settings so that each user can enjoy the best experience.",
+        "about-open-source-title": "Open source application",
+        "about-open-source-desc": "Hexitalk is an open source application, which means that its code is publicly available and can be used, modified, and improved by anyone interested. This openness allows developers to contribute to the improvement of the application, add new features, and fix bugs, thus fostering an active and collaborative community.",
+        "about-open-source-sub-desc": "By being open source, Hexitalk benefits from continuous innovation and transparency, offering users a dynamic and constantly evolving application."
+      },
+      "aria": {}
     }
   }
 }
