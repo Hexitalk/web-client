@@ -1,3 +1,5 @@
+@use "../../../../../assets/styles/abstracts/mixins.scss" as mixins;
+
 :host {
   width: 100%;
   display: flex;
@@ -62,6 +64,23 @@ form {
       &.form-submit-container {
         display: flex;
         justify-content: flex-end;
+      }
+    }
+  }
+}
+
+@include mixins.screen(sm) {
+  form {
+    .form-row {
+      flex-direction: column;
+      row-gap: 1rem;
+      .form-col {
+        width: 100%;
+        small {
+        }
+        p-button {
+          margin-top: 2rem;
+        }
       }
     }
   }
