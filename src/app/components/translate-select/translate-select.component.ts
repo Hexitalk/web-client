@@ -25,7 +25,12 @@ export class TranslateSelectComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.translocoService.setActiveLang(this.selectedLanguage);
+    const langCurrent = this.translocoService.getActiveLang();
+    if (langCurrent) {
+      this.selectedLanguage = langCurrent;
+    }
+
+    //this.translocoService.setActiveLang(this.selectedLanguage);
   }
 
   /*ngOnChanges(changes: SimpleChanges): void {
