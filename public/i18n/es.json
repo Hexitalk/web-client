@@ -29,6 +29,21 @@
         "about-open-source-sub-desc": "Al ser de código abierto, Hexitalk se beneficia de la innovación continua y la transparencia, ofreciendo a los usuarios una aplicación dinámica y en constante evolución."
       },
       "aria": {}
+    },
+    "login-form-auth-component": {
+      "text": {
+        "email": "Email",
+        "email-is-required": "El email es obligatorio",
+        "email-not-valid": "El email no es válido",
+        "password": "Contraseña",
+        "password-is-required": "La contraseña es obligatoria",
+        "password-not-valid-length": "la contraseña debe tener al menos {length} caracteres",
+        "password-not-valid-pattern": "la contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial",
+        "sign-in": "Iniciar sesión",
+        "are-you-new-question": "¿Nuevo en Hexitalk?",
+        "create-account": "Crear cuenta"
+      },
+      "aria": {}
     }
   }
 }

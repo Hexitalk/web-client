@@ -12,6 +12,7 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { Router, RouterModule } from '@angular/router';
 import { AuthSocketLoginUseCase } from '../../../use-cases/auth-socket-login.usecase';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-login-form-auth',
@@ -23,6 +24,7 @@ import { AuthSocketLoginUseCase } from '../../../use-cases/auth-socket-login.use
     CardModule,
     InputTextModule,
     RouterModule,
+    TranslocoModule,
   ],
   templateUrl: './login-form-auth.component.html',
   styleUrl: './login-form-auth.component.scss',

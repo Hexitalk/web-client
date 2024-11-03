@@ -29,6 +29,21 @@
         "about-open-source-sub-desc": "By being open source, Hexitalk benefits from continuous innovation and transparency, offering users a dynamic and constantly evolving application."
       },
       "aria": {}
+    },
+    "login-form-auth-component": {
+      "text": {
+        "email": "Email",
+        "email-is-required": "Email is required",
+        "email-not-valid": "Email is not valid",
+        "password": "Password",
+        "password-is-required": "Password is required",
+        "password-not-valid-length": "password must be at least {length} characters",
+        "password-not-valid-pattern": "password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+        "sign-in": "Sign in",
+        "are-you-new-question": "New to Hexitalk?",
+        "create-account": "Create account"
+      },
+      "aria": {}
     }
   }
 }
