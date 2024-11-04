@@ -19,7 +19,7 @@ export class TranslateSelectComponent implements OnInit {
   constructor(private translocoService: TranslocoService) {
     this.languages = [
       { name: 'Español', code: 'es' },
-      { name: 'François', code: 'fr' },
+      { name: 'Français', code: 'fr' },
       { name: 'English', code: 'en' },
     ];
   }
