@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoModule } from '@jsverse/transloco';
 import { TranslateSelectComponent } from '../../components/translate-select/translate-select.component';
 import { A11yModule, LiveAnnouncer } from '@angular/cdk/a11y';
 import { Button } from 'primeng/button';

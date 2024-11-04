@@ -8,7 +8,7 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { provideTransloco } from '@ngneat/transloco';
+import { provideTransloco } from '@jsverse/transloco';
 import { TranslocoHttpLoader } from '../contexts/shared/services/transloco-loader';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthDataModule } from '../contexts/auth/data/auth-data.module';

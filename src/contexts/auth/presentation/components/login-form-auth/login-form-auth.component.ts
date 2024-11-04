@@ -12,7 +12,7 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { Router, RouterModule } from '@angular/router';
 import { AuthSocketLoginUseCase } from '../../../use-cases/auth-socket-login.usecase';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-login-form-auth',
@@ -40,9 +40,9 @@ export class LoginFormAuthComponent {
     private router: Router
   ) {
     this.loginForm = this.fb.group({
-      email: ['yolo@yolo.com', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
       password: [
-        'Con1234',
+        '',
         [
           Validators.required,
           Validators.minLength(6),

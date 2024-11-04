@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LandingPageComponent } from './landing-page.component';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { ActivatedRoute } from '@angular/router';
 import {
   mockActivatedRoute,

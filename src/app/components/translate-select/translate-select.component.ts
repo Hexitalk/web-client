@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { MenuItem } from 'primeng/api';
 import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
 

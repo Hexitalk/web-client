@@ -3,7 +3,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import { GetAuthTokenUseCase } from '../contexts/auth/use-cases/get-auth-token.usecase';
 import { merge, Subject, takeUntil } from 'rxjs';
 import { AuthDataModule } from '../contexts/auth/data/auth-data.module';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoModule } from '@jsverse/transloco';
 import { PrimeNGConfig } from 'primeng/api';
 import { SocketDataModule } from '../contexts/socket/data/socket-data.module';
 import { ListenReconnectSocketUseCase } from '../contexts/socket/use-cases/listen-reconnect-socket.usecase';
